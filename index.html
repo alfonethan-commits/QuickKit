@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="QuickKit is a free productivity website with tools for image compression, PDF merging, word counting, QR codes, and unit conversion."
+    />
+    <title>QuickKit</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="container nav" aria-label="Main navigation">
+        <a href="#home" class="brand" aria-label="Home">QuickKit</a>
+        <div class="nav-links">
+          <a href="#home">Home</a>
+          <a href="#tools">Tools</a>
+          <a href="#premium">Premium</a>
+          <a href="#about">About</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section id="home" class="hero container">
+        <div class="hero-copy">
+          <p class="eyebrow">Free productivity tools</p>
+          <h1>Everything You Need, All in One Place</h1>
+          <p class="hero-text">
+            Simplify your everyday tasks with free, fast, and easy-to-use online tools.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#tools" class="primary-btn">Explore Tools</a>
+          </div>
+
+          <label class="search-box" for="tool-search">
+            <span class="sr-only">Search tools</span>
+            <input
+              id="tool-search"
+              type="search"
+              placeholder="Search for a tool..."
+              aria-label="Search tools"
+            />
+          </label>
+        </div>
+
+        <aside class="ad-card ad-hero" aria-label="Advertisement placeholder">
+          <span>Top banner ad space</span>
+        </aside>
+      </section>
+
+      <section id="tools" class="tools container">
+        <div class="section-header">
+          <p class="section-tag">Tools</p>
+          <h2>Choose a tool</h2>
+        </div>
+
+        <div id="tools-grid" class="tools-grid" aria-live="polite">
+          <article class="tool-card" data-tool-name="Image Compressor">
+            <div class="tool-icon">🖼️</div>
+            <h3>Image Compressor</h3>
+            <p>Reduce image size while keeping quality in check.</p>
+            <button class="tool-btn" data-tool="image-compressor" type="button">Open Tool</button>
+          </article>
+
+          <article class="tool-card" data-tool-name="PDF Merger">
+            <div class="tool-icon">📄</div>
+            <h3>PDF Merger</h3>
+            <p>Combine multiple PDFs into one file in seconds.</p>
+            <button class="tool-btn" data-tool="pdf-merger" type="button">Open Tool</button>
+          </article>
+
+          <article class="tool-card" data-tool-name="Word Counter">
+            <div class="tool-icon">📝</div>
+            <h3>Word Counter</h3>
+            <p>Track words, characters, paragraphs, and reading time.</p>
+            <button class="tool-btn" data-tool="word-counter" type="button">Open Tool</button>
+          </article>
+
+          <article class="tool-card" data-tool-name="QR Code Generator">
+            <div class="tool-icon">🔳</div>
+            <h3>QR Code Generator</h3>
+            <p>Create quick scannable QR codes for text or links.</p>
+            <button class="tool-btn" data-tool="qr-generator" type="button">Open Tool</button>
+          </article>
+
+          <article class="tool-card" data-tool-name="Unit Converter">
+            <div class="tool-icon">🔄</div>
+            <h3>Unit Converter</h3>
+            <p>Convert length, weight, time, temperature, and volume.</p>
+            <button class="tool-btn" data-tool="unit-converter" type="button">Open Tool</button>
+          </article>
+        </div>
+
+        <div id="tool-not-found" class="tool-not-found hidden" role="status">
+          No tools match your search. Try a different keyword.
+        </div>
+
+        <div id="tool-workspace" class="tool-workspace hidden" aria-live="polite">
+          <button id="back-to-tools" class="secondary-btn" type="button">Back</button>
+
+          <section class="workspace-panel hidden" id="panel-image-compressor" aria-label="Image compressor tool">
+            <div class="panel-header">
+              <h3>Image Compressor</h3>
+            </div>
+
+            <div class="tool-body">
+              <div class="input-group">
+                <label for="image-input">Choose an image</label>
+                <input id="image-input" type="file" accept="image/jpeg,image/png,image/webp" />
+              </div>
+
+              <div class="image-grid">
+                <div class="image-box">
+                  <h4>Original</h4>
+                  <img id="original-preview" alt="Original preview" class="preview-image hidden" />
+                  <p id="original-size" class="meta-text">No image selected.</p>
+                </div>
+
+                <div class="image-box">
+                  <h4>Compressed</h4>
+                  <img id="compressed-preview" alt="Compressed preview" class="preview-image hidden" />
+                  <p id="compressed-size" class="meta-text">No compressed version yet.</p>
+                  <p id="reduction-percent" class="meta-text"></p>
+                </div>
+              </div>
+
+              <div class="compact-controls">
+                <div class="slider-wrap">
+                  <label for="quality-slider">Compression quality</label>
+                  <input id="quality-slider" type="range" min="0.1" max="1" step="0.05" value="0.75" />
+                  <span id="quality-value">0.75</span>
+                </div>
+
+                <div class="input-group inline">
+                  <label for="output-format">Output format</label>
+                  <select id="output-format">
+                    <option value="image/jpeg">JPEG</option>
+                    <option value="image/png">PNG</option>
+                    <option value="image/webp">WebP</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="tool-actions">
+                <button id="compress-image" class="primary-btn" type="button">Compress</button>
+                <a id="download-image" class="secondary-btn disabled-link" href="#" download="compressed-image">Download</a>
+              </div>
+
+              <p class="status-message" id="image-status" aria-live="polite"></p>
+              <p class="note-text">
+                Some formats, transparency, and metadata may not be preserved in every conversion.
+              </p>
+            </div>
+          </section>
+
+          <section class="workspace-panel hidden" id="panel-pdf-merger" aria-label="PDF merger tool">
+            <div class="panel-header">
+              <h3>PDF Merger</h3>
+            </div>
+
+            <div class="tool-body">
+              <div class="input-group">
+                <label for="pdf-input">Select PDFs to merge</label>
+                <input id="pdf-input" type="file" accept="application/pdf" multiple />
+              </div>
+
+              <div class="list-box">
+                <p id="pdf-summary">No files selected yet.</p>
+                <ul id="pdf-file-list" class="file-list"></ul>
+              </div>
+
+              <div class="tool-actions">
+                <button id="merge-pdfs" class="primary-btn" type="button">Merge PDFs</button>
+                <a id="download-merged-pdf" class="secondary-btn disabled-link" href="#" download="merged-file.pdf">Download Merged PDF</a>
+              </div>
+
+              <p id="pdf-status" class="status-message" aria-live="polite"></p>
+              <p class="note-text">
+                Password-protected or damaged PDFs may not merge successfully. Please process files locally in the browser.
+              </p>
+            </div>
+          </section>
+
+          <section class="workspace-panel hidden" id="panel-word-counter" aria-label="Word counter tool">
+            <div class="panel-header">
+              <h3>Word Counter</h3>
+            </div>
+
+            <div class="tool-body">
+              <div class="input-group">
+                <label for="word-input">Paste or type text</label>
+                <textarea id="word-input" rows="12" placeholder="Type or paste text here..."></textarea>
+              </div>
+
+              <div class="stats-grid">
+                <div class="stat-card">
+                  <span>Words</span>
+                  <strong id="word-count">0</strong>
+                </div>
+                <div class="stat-card">
+                  <span>Characters</span>
+                  <strong id="char-count">0</strong>
+                </div>
+                <div class="stat-card">
+                  <span>Characters no spaces</span>
+                  <strong id="char-no-space">0</strong>
+                </div>
+                <div class="stat-card">
+                  <span>Sentences</span>
+                  <strong id="sentence-count">0</strong>
+                </div>
+                <div class="stat-card">
+                  <span>Paragraphs</span>
+                  <strong id="paragraph-count">0</strong>
+                </div>
+                <div class="stat-card">
+                  <span>Reading time</span>
+                  <strong id="reading-time">0 min</strong>
+                </div>
+              </div>
+
+              <div class="tool-actions">
+                <button id="clear-text" class="secondary-btn" type="button">Clear Text</button>
+                <button id="copy-text" class="primary-btn" type="button">Copy Text</button>
+              </div>
+
+              <p id="word-status" class="status-message" aria-live="polite"></p>
+            </div>
+          </section>
+
+          <section class="workspace-panel hidden" id="panel-qr-generator" aria-label="QR code generator tool">
+            <div class="panel-header">
+              <h3>QR Code Generator</h3>
+            </div>
+
+            <div class="tool-body">
+              <div class="input-group">
+                <label for="qr-input">Enter text or a URL</label>
+                <input id="qr-input" type="text" placeholder="https://example.com or some text" />
+              </div>
+
+              <div class="tool-actions">
+                <button id="generate-qr" class="primary-btn" type="button">Generate QR Code</button>
+                <button id="clear-qr" class="secondary-btn" type="button">Clear</button>
+              </div>
+
+              <div class="qr-box">
+                <canvas id="qr-canvas" width="220" height="220" aria-label="Generated QR code preview"></canvas>
+              </div>
+
+              <div class="tool-actions">
+                <button id="download-qr" class="secondary-btn" type="button">Download QR Code</button>
+              </div>
+
+              <p id="qr-status" class="status-message" aria-live="polite"></p>
+            </div>
+          </section>
+
+          <section class="workspace-panel hidden" id="panel-unit-converter" aria-label="Unit converter tool">
+            <div class="panel-header">
+              <h3>Unit Converter</h3>
+            </div>
+
+            <div class="tool-body">
+              <div class="input-group">
+                <label for="unit-category">Category</label>
+                <select id="unit-category">
+                  <option value="length">Length</option>
+                  <option value="weight">Weight and mass</option>
+                  <option value="temperature">Temperature</option>
+                  <option value="volume">Volume</option>
+                  <option value="time">Time</option>
+                </select>
+              </div>
+
+              <div class="converter-row">
+                <div class="input-group">
+                  <label for="unit-value">Value</label>
+                  <input id="unit-value" type="number" step="any" placeholder="Enter a number" />
+                </div>
+              </div>
+
+              <div class="converter-row">
+                <div class="input-group">
+                  <label for="unit-from">From</label>
+                  <select id="unit-from"></select>
+                </div>
+
+                <div class="input-group">
+                  <label for="unit-to">To</label>
+                  <select id="unit-to"></select>
+                </div>
+              </div>
+
+              <div class="tool-actions">
+                <button id="convert-units" class="primary-btn" type="button">Convert</button>
+                <button id="swap-units" class="secondary-btn" type="button">Swap Units</button>
+                <button id="clear-units" class="secondary-btn" type="button">Clear</button>
+              </div>
+
+              <div id="unit-result" class="result-box" aria-live="polite">
+                Enter a value to convert.
+              </div>
+
+              <p id="unit-status" class="status-message" aria-live="polite"></p>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section id="premium" class="premium container">
+        <div class="section-header centered">
+          <p class="section-tag">Premium</p>
+          <h2>QuickKit Premium</h2>
+          <p>More convenience, fewer interruptions.</p>
+        </div>
+
+        <div class="pricing-grid">
+          <article class="plan-card">
+            <h3>1-Day Plan</h3>
+            <div class="price">$0.20</div>
+            <ul>
+              <li>No advertising interruptions.</li>
+              <li>Convenient access to premium features.</li>
+              <li>A cleaner workspace.</li>
+              <li>Support for future QuickKit development.</li>
+            </ul>
+            <button class="purchase-btn" type="button">Purchase</button>
+          </article>
+
+          <article class="plan-card popular">
+            <div class="popular-badge">Popular</div>
+            <h3>1-Week Plan</h3>
+            <div class="price">$1.30</div>
+            <ul>
+              <li>No advertising interruptions.</li>
+              <li>Convenient access to premium features.</li>
+              <li>A cleaner workspace.</li>
+              <li>Support for future QuickKit development.</li>
+            </ul>
+            <button class="purchase-btn" type="button">Purchase</button>
+          </article>
+
+          <article class="plan-card">
+            <h3>1-Month Plan</h3>
+            <div class="price">$5.00</div>
+            <ul>
+              <li>No advertising interruptions.</li>
+              <li>Convenient access to premium features.</li>
+              <li>A cleaner workspace.</li>
+              <li>Support for future QuickKit development.</li>
+            </ul>
+            <button class="purchase-btn" type="button">Purchase</button>
+          </article>
+
+          <article class="plan-card">
+            <h3>1-Year Plan</h3>
+            <div class="price">$57.00</div>
+            <ul>
+              <li>No advertising interruptions.</li>
+              <li>Convenient access to premium features.</li>
+              <li>A cleaner workspace.</li>
+              <li>Support for future QuickKit development.</li>
+            </ul>
+            <button class="purchase-btn" type="button">Purchase</button>
+          </article>
+        </div>
+
+        <p id="premium-status" class="premium-note" aria-live="polite">
+          Premium is currently a demonstration page. Payments are not yet configured, and no paid benefits are unlocked by clicking Purchase.
+        </p>
+      </section>
+
+      <section class="ad-section container">
+        <div class="ad-card ad-bottom" aria-label="Bottom banner placeholder">
+          <span>Bottom banner ad space</span>
+        </div>
+      </section>
+
+      <section id="about" class="info-section container">
+        <div class="section-header">
+          <p class="section-tag">About</p>
+          <h2>About QuickKit</h2>
+        </div>
+
+        <p>
+          QuickKit brings useful everyday tools together in one convenient place. Whether you need to compress an image, merge PDFs, count words, generate a QR code, or convert units, QuickKit helps you get things done quickly.
+        </p>
+        <p>
+          The current tools process many files locally in the browser whenever supported, which helps keep user files on their device as much as possible. Browser-based processing is convenient, but no system can guarantee complete privacy or security in every situation.
+        </p>
+      </section>
+
+      <section id="faq" class="faq container">
+        <div class="section-header">
+          <p class="section-tag">FAQ</p>
+          <h2>Frequently asked questions</h2>
+        </div>
+
+        <div class="faq-list">
+          <div class="faq-item open">
+            <button type="button" class="faq-question">Is QuickKit free?</button>
+            <div class="faq-answer">
+              <p>Yes. The core tools are free to use. Premium is a demonstration page until a real payment provider is integrated.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-question">Do I need to install anything?</button>
+            <div class="faq-answer">
+              <p>No installation is required. QuickKit runs in a modern browser and works as a static website.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-question">Are my uploaded files stored?</button>
+            <div class="faq-answer">
+              <p>Many tools process files in the browser, so they are handled locally and are not uploaded to a remote server in this version. No online service can guarantee complete security in every situation.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-question">What is QuickKit Premium?</button>
+            <div class="faq-answer">
+              <p>Premium is a planned upgrade option for future convenience features. At present, it is a design and demonstration page only, and purchases are not available.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-question">Why might a file fail to process?</button>
+            <div class="faq-answer">
+              <p>A file may fail if it is damaged, password-protected, too large, in an unsupported format, or corrupt. Unsupported metadata, transparency, or conversion limits may also affect the output.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="privacy" class="info-section container">
+        <div class="section-header">
+          <p class="section-tag">Privacy Policy</p>
+          <h2>Privacy Policy</h2>
+        </div>
+        <p>
+          QuickKit is designed to process many files directly in the browser. This means your files may stay on your device while you use the tools, depending on browser support and the specific feature.
+        </p>
+        <p>
+          This website does not currently use a backend service for the core tools. If you later add online services or a payment provider, this policy should be reviewed and updated before launch.
+        </p>
+      </section>
+
+      <section id="terms" class="info-section container">
+        <div class="section-header">
+          <p class="section-tag">Terms of Use</p>
+          <h2>Terms of Use</h2>
+        </div>
+        <p>
+          By using QuickKit, you agree to use the tools responsibly and not for unlawful or harmful activity. You are responsible for any files you upload, and the site is provided as a free browser-based utility for convenience.
+        </p>
+        <p>
+          QuickKit is a demonstration and starter site. Features may change, and premium purchases are not currently available until a legitimate payment system is integrated.
+        </p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <h3>QuickKit</h3>
+          <p>Free, fast, and simple tools for everyday tasks.</p>
+        </div>
+
+        <div>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#tools">Tools</a></li>
+            <li><a href="#premium">Premium</a></li>
+            <li><a href="#about">About</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="#privacy">Privacy Policy</a></li>
+            <li><a href="#terms">Terms of Use</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="container footer-bottom">
+        <p>© 2026 QuickKit. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.0.0/build/qrcode.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
